@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerPilot - Related Jobs</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .job-count {
+            background: #e0edff;
+            color: #2563eb;
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .job {
+            background: white;
+            padding: 25px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #2563eb;
+        }
+
+        .job h2 {
+            margin: 0 0 18px;
+            font-size: 22px;
+        }
+
+        .job-info {
+            margin-bottom: 20px;
+        }
+
+        .job-info p {
+            margin: 9px 0;
+            color: #475569;
+        }
+
+        .view-button {
+            display: inline-block;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .view-button:hover {
+            background: #1d4ed8;
+        }
+
+        .unavailable {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .no-jobs {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .no-jobs h2 {
+            margin-bottom: 10px;
+        }
+
+        .no-jobs p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .job {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>CareerPilot</h1>
+
+        <p class="subtitle">
+            Jobs related to
+            <b>{{ career_goal }}</b>
+        </p>
+
+        {% if jobs %}
+
+            <div class="job-count">
+                {{ jobs|length }} related job(s) found
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    {% if jobs %}
+
+        {% for job in jobs %}
+
+        <div class="job">
+
+            <h2>💼 {{ job.title }}</h2>
+
+            <div class="job-info">
+
+                <p>
+                    <b>🏢 Company:</b>
+                    {{ job.company }}
+                </p>
+
+                <p>
+                    <b>📍 Location:</b>
+                    {{ job.location }}
+                </p>
+
+                <p>
+                    <b>💼 Work Type:</b>
+                    {{ job.work_type }}
+                </p>
+
+            <p>
+    <b>🎯 Experience Level:</b>
+    {{ job.experience_level | default("Not specified", true) }}
+</p>
+
+{% if job.fresher_friendly %}
+    <p style="color: #15803d; font-weight: bold;">
+        ✓ Suitable to explore as a fresher / early-career candidate
+    </p>
+{% endif %}
+
+            </div>
+
+
+            {% if job.url and job.url != "Not available" %}
+
+                <a
+                    class="view-button"
+                    href="{{ job.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Apply / View Job →
+                </a>
+
+            {% else %}
+
+                <span class="unavailable">
+                    Job link unavailable
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="no-jobs">
+
+    <h2>🔎 No Jobs Found in This Search</h2>
+
+    <p>
+        No matching listings were returned by the job sources
+        for this search.
+    </p>
+
+    <p>
+        Try again later or choose a broader career goal,
+        such as Software Developer or Web Developer.
+    </p>
+
+    <p>
+        This does not necessarily mean there are no suitable
+        jobs available elsewhere.
+    </p>
+
+</div>
+
+    {% endif %}
+
+
+    <a class="button" href="/">
+        ← Back to CareerPilot
+    </a>
+
+</div>
+
+</body>
+
+</html>

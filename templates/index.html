@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerPilot | AI Career & Resume Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            color: #172033;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+            color: #4f46e5;
+        }
+
+        .brand span {
+            color: #111827;
+        }
+
+        .nav-text {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 42px;
+            line-height: 1.15;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 15px auto 0;
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1050px;
+            margin: 25px auto 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            margin: 0 0 6px;
+            font-size: 23px;
+            color: #111827;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dbe1ea;
+            border-radius: 10px;
+            background: #f8fafc;
+            color: #172033;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        .hint {
+            margin-top: 6px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .upload-box {
+            border: 2px dashed #c7d2fe;
+            background: #f8faff;
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .upload-box:hover {
+            border-color: #6366f1;
+            background: #f5f3ff;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .upload-title {
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .upload-description {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .upload-box input {
+            background: white;
+        }
+
+        .submit-button {
+            width: 100%;
+            margin-top: 28px;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .feature {
+            padding: 16px;
+            border-radius: 12px;
+            background: #f8fafc;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .feature strong {
+            display: block;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .feature small {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 17px 5%;
+            }
+
+            .nav-text {
+                display: none;
+            }
+
+            .hero {
+                padding: 35px 18px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .container {
+                width: 94%;
+                padding: 22px;
+                margin-top: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            Career<span>Pilot</span>
+        </div>
+
+        <div class="nav-text">
+            AI Career & Resume Assistant
+        </div>
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            ✨ AI-Powered Career Assistant
+        </div>
+
+        <h1>
+            Build Your Career with
+            <span>CareerPilot</span>
+        </h1>
+
+        <p>
+            Analyze your resume, discover career opportunities,
+            identify skill gaps, prepare for interviews and find
+            relevant jobs — all in one place.
+        </p>
+
+    </section>
+
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>👤 Create Your Career Profile</h2>
+
+            <p>
+                Enter your details and upload your resume to get a personalized career analysis.
+            </p>
+        </div>
+
+
+        <form action="/analyze" method="POST" enctype="multipart/form-data">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+    Career Goal <span class="required">*</span>
+</label>
+
+<select name="career_goal" required>
+
+    <option value="">
+        Select your career goal
+    </option>
+
+    <optgroup label="💻 Software & Development">
+        <option>Python Developer</option>
+        <option>Java Developer</option>
+        <option>Web Developer</option>
+        <option>Frontend Developer</option>
+        <option>Backend Developer</option>
+        <option>Full Stack Developer</option>
+        <option>JavaScript Developer</option>
+        <option>React Developer</option>
+        <option>Node.js Developer</option>
+        <option>Software Developer</option>
+        <option>Mobile App Developer</option>
+        <option>Game Developer</option>
+    </optgroup>
+
+    <optgroup label="📊 Data & AI">
+        <option>Data Analyst</option>
+        <option>Data Scientist</option>
+        <option>Data Engineer</option>
+        <option>Machine Learning Engineer</option>
+        <option>AI Engineer</option>
+        <option>NLP Engineer</option>
+        <option>Business Intelligence Analyst</option>
+    </optgroup>
+
+    <optgroup label="☁️ Cloud & DevOps">
+        <option>Cloud Engineer</option>
+        <option>Cloud Developer</option>
+        <option>DevOps Engineer</option>
+        <option>Site Reliability Engineer</option>
+    </optgroup>
+
+    <optgroup label="🔐 Cybersecurity">
+        <option>Cybersecurity Analyst</option>
+        <option>SOC Analyst</option>
+        <option>Security Engineer</option>
+        <option>Ethical Hacker</option>
+        <option>Penetration Tester</option>
+    </optgroup>
+
+    <optgroup label="🗄️ Database & Systems">
+        <option>Database Developer</option>
+        <option>Database Administrator</option>
+        <option>System Administrator</option>
+        <option>IT Support Engineer</option>
+    </optgroup>
+
+    <optgroup label="🧪 Testing">
+        <option>QA Engineer</option>
+        <option>Software Tester</option>
+        <option>Automation Tester</option>
+    </optgroup>
+
+    <optgroup label="🎨 Design & Business">
+        <option>UI/UX Designer</option>
+        <option>Business Analyst</option>
+        <option>IT Consultant</option>
+        <option>Technical Consultant</option>
+    </optgroup>
+
+</select>
+
+<div class="hint">
+    🎯 Select the career you want CareerPilot to analyze.
+</div>
+                </div>
+
+                
+                <div class="form-group">
+
+                    <label>
+                        Full Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Email <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="example@gmail.com"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Education / Stream
+                    </label>
+
+                    <select name="education">
+
+                        <option value="">
+                            Select your stream
+                        </option>
+
+                        <option>B.Sc Computer Science</option>
+                        <option>BCA</option>
+                        <option>B.Com</option>
+                        <option>BBA</option>
+                        <option>Engineering</option>
+                        <option>Science</option>
+                        <option>Arts</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Experience
+                    </label>
+
+                    <select name="experience">
+
+                        <option value="">
+                            Select experience
+                        </option>
+
+                        <option>Fresher</option>
+                        <option>0-1 Year</option>
+                        <option>1-3 Years</option>
+                        <option>3+ Years</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Skills <span class="required">*</span>
+                    </label>
+
+                    <textarea
+    name="skills"
+    placeholder="Example: Python, Java, MySQL, HTML, CSS"
+    required
+></textarea>
+
+                    <div class="hint">
+                        💡 Separate multiple skills with commas.
+                    </div>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Projects
+                    </label>
+
+                    <textarea
+                        name="projects"
+                        placeholder="Example: CareerPilot Web App, Movie Recommendation System"
+                    ></textarea>
+
+                    <div class="hint">
+                        🚀 Mention academic, personal or freelance projects.
+                    </div>
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Resume (PDF)
+                    </label>
+
+                    <div class="upload-box">
+
+                        <div class="upload-icon">
+                            📄
+                        </div>
+
+                        <div class="upload-title">
+                            Upload your resume
+                        </div>
+
+                        <div class="upload-description">
+                            PDF format recommended for resume analysis
+                        </div>
+
+                        <input
+                            type="file"
+                            name="resume"
+                            accept=".pdf"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+<button
+    type="submit"
+    class="submit-button"
+    id="analyzeButton"
+>
+    🚀 Analyze My Profile
+</button>
+
+<p id="loadingMessage" style="display:none; text-align:center; color:#4f46e5; margin-top:15px;">
+    ⏳ Analyzing your profile... Please wait. This may take a little time.
+</p>
+
+        </form>
+
+
+        <div class="features">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <strong>Resume Analysis</strong>
+
+                <small>
+                    ATS score & improvement suggestions
+                </small>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎯
+                </div>
+
+                <strong>Career Matching</strong>
+
+                <small>
+                    Discover suitable career paths
+                </small>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <strong>Job Opportunities</strong>
+
+                <small>
+                    Find relevant jobs in India
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        CareerPilot © 2026 · AI Career and Resume Assistant
+    </div>
+    
+    <script>
+    const form = document.querySelector('form');
+    const analyzeButton = document.getElementById('analyzeButton');
+    const loadingMessage = document.getElementById('loadingMessage');
+
+    form.addEventListener('submit', function (event) {
+        if (form.dataset.submitted === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        form.dataset.submitted = 'true';
+        analyzeButton.disabled = true;
+        analyzeButton.textContent = '⏳ Analyzing your profile...';
+        analyzeButton.style.opacity = '0.7';
+        analyzeButton.style.cursor = 'not-allowed';
+        loadingMessage.style.display = 'block';
+    });
+</script>
+
+
+</body>
+</html>
